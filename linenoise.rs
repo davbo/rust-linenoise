@@ -3,6 +3,8 @@ pub type linenoiseCompletions = {
     cvec: **libc::c_char,
 };
 
+// Build against the version of linenoise bundled with rust see rust/rt
+// Hopefully in the future I can figure out how to include the updated version
 #[nolink]
 extern mod linenoise {
     fn linenoise(prompt: *libc::c_char) -> *libc::c_char;
