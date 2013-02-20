@@ -42,7 +42,7 @@ pub fn history_save(filename: &str) -> bool {
     saved as int == 0 // Seems to always be 0 if successful?
 }
 
-pub fn enable_multiline(enable: bool) -> bool {
+pub fn set_multiline(enable: bool) -> bool {
     if enable {
         unsafe {
             linenoise::linenoiseSetMultiLine(1);
