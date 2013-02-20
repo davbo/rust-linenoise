@@ -5,15 +5,14 @@ pub type linenoiseCompletions = {
 
 // Build against the version of linenoise bundled with rust see rust/rt
 // Hopefully in the future I can figure out how to include the updated version
-#[nolink]
 extern mod linenoise {
     fn linenoise(prompt: *libc::c_char) -> *libc::c_char;
     fn linenoiseHistoryAdd(line: *libc::c_char) -> libc::c_int;
     fn linenoiseHistorySetMaxLen(length: libc::c_int) -> libc::c_int;
     fn linenoiseHistorySave(filename: *libc::c_char) -> libc::c_int;
     fn linenoiseHistoryLoad(filename: *libc::c_char) -> libc::c_int;
-    /*fn linenoiseSetMultiLine(enabled: libc::c_int) -> libc::c_void;*/
-    /*fn linenoiseClearScreen() -> libc::c_void;*/
+    fn linenoiseSetMultiLine(enabled: libc::c_int) -> libc::c_void;
+    fn linenoiseClearScreen() -> libc::c_void;
 }
 
 pub fn init(prompt: &str) -> ~str {
@@ -43,11 +42,6 @@ pub fn history_save(filename: &str) -> bool {
     saved as int == 0 // Seems to always be 0 if successful?
 }
 
-/*
-   TODO: Enable once I can figure out how to include an updated version of linenoise
-   I suspect I need to build it and then provide a linkname, but not sure
-*/
-/*
 pub fn enable_multiline(enable: bool) -> bool {
     if enable {
         unsafe {
@@ -61,4 +55,9 @@ pub fn enable_multiline(enable: bool) -> bool {
         }
     }
 }
-*/
+
+pub fn clear_screen() {
+    unsafe {
+        linenoise::linenoiseClearScreen();
+    }
+}
