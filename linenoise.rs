@@ -1,10 +1,14 @@
-pub type linenoiseCompletions = {
+// Crate linkage metadata
+#[link(name = "linenoise", vers = "0.1", author = "davbo")];
+
+// Make a library ("bin" is the default)
+#[crate_type = "lib"];
+
+struct linenoiseCompletions {
     len: libc::size_t,
     cvec: **libc::c_char,
-};
+}
 
-// Build against the version of linenoise bundled with rust see rust/rt
-// Hopefully in the future I can figure out how to include the updated version
 extern mod linenoise {
     fn linenoise(prompt: *libc::c_char) -> *libc::c_char;
     fn linenoiseHistoryAdd(line: *libc::c_char) -> libc::c_int;
@@ -42,16 +46,14 @@ pub fn history_save(filename: &str) -> bool {
     saved as int == 0 // Seems to always be 0 if successful?
 }
 
-pub fn set_multiline(enable: bool) -> bool {
+pub fn set_multiline(enable: bool) {
     if enable {
         unsafe {
             linenoise::linenoiseSetMultiLine(1);
-            true
         }
     } else {
         unsafe {
             linenoise::linenoiseSetMultiLine(0);
-            false
         }
     }
 }
