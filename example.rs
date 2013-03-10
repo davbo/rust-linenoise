@@ -1,9 +1,9 @@
-mod linenoise;
+extern mod linenoise;
 
 
 fn main() {
-    linenoise::set_multiline(true);
     linenoise::clear_screen();
+    linenoise::set_multiline(true);
     loop {
         let line = linenoise::init("prompt> ");
         linenoise::history_add(line);
